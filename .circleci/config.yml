@@ -1,6 +1,10 @@
 version: 2
 jobs:
   build:
+    parameters:
+      sleeptime:
+        type: string
+        default: "15s"
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
       - image: circleci/cci-demo-docker-primary:0.0.2
@@ -14,7 +18,7 @@ jobs:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - run: sleep 30s
+      - run: sleep <parameters.sleeptime>
       - checkout
 
       - run:
@@ -72,3 +76,13 @@ jobs:
 
       - store_test_results:
           path: /tmp/test-results
+
+workflows:
+  workflow:
+    jobs:
+      - build:
+          sleeptime: "15s"
+      - build:
+          sleeptime: "30s"
+      - build:
+          sleeptime: "45s"
