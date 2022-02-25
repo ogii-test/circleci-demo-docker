@@ -18,7 +18,7 @@ jobs:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - run: sleep <parameters.sleeptime>
+      - run: sleep <<parameters.sleeptime>>
       - checkout
 
       - run:
